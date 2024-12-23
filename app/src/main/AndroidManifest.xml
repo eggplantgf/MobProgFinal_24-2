@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MobProgFinal_v1">
+
+        <activity
+            android:name=".auth.SignupActivity"
+            android:exported="true" />
+
+        <!-- LoginActivity -->
+        <activity
+            android:name=".auth.LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- BoardActivity -->
+        <activity
+            android:name=".board.BoardActivity"
+            android:exported="true" />
+
+        <!-- EditPostActivity -->
+        <activity
+            android:name=".board.EditPostActivity"
+            android:exported="true" />
+
+        <!-- PostDetailActivity -->
+        <activity
+            android:name=".board.PostDetailActivity"
+            android:exported="true" />
+
+    </application>
+
+    <!-- 권한 설정 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+</manifest>
