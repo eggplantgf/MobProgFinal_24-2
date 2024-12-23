@@ -1,4 +1,4 @@
-package com.example.mobprogfinal_v1.auth;
+package com.example.mobprogfinal_v1.providers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobprogfinal_v1.R;
+import com.example.mobprogfinal_v1.auth.SignupActivity;
 import com.example.mobprogfinal_v1.board.BoardActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,8 +31,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Firebase Auth 초기화
         mAuth = FirebaseAuth.getInstance();
+
+        // 사용자 로그인 상태 확인
+        if (mAuth.getCurrentUser() != null) {
+            navigateToBoardActivity();
+            return;
+        }
 
         emailEditText = findViewById(R.id.email_edit_text);
         passwordEditText = findViewById(R.id.password_edit_text);
@@ -63,22 +69,22 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Firebase Auth를 사용한 로그인
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<com.google.firebase.auth.AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<com.google.firebase.auth.AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // 로그인 성공
-                            Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this, BoardActivity.class);
-                            startActivity(intent);
-                            finish();
+                            navigateToBoardActivity();
                         } else {
-                            // 로그인 실패
                             Toast.makeText(LoginActivity.this, "로그인 실패: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
+    }
+
+    private void navigateToBoardActivity() {
+        Intent intent = new Intent(LoginActivity.this, BoardActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
