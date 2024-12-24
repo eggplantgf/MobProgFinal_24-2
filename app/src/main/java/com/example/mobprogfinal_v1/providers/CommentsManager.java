@@ -1,14 +1,15 @@
 package com.example.mobprogfinal_v1.providers;
 
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 
+import com.example.mobprogfinal_v1.models.Comment;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.DatabaseError;
-import com.example.mobprogfinal_v1.models.Comment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,7 @@ public class CommentsManager {
     public void addComment(String postId, Comment comment, CompletionCallback callback) {
         String key = commentsRef.child(postId).push().getKey();
         if (key != null) {
+            comment.setId(key);
             commentsRef.child(postId).child(key).setValue(comment)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -64,6 +66,17 @@ public class CommentsManager {
         } else {
             callback.onFailure(new Exception("Failed to generate comment ID"));
         }
+    }
+
+    public void deleteComment(String postId, String commentId, CompletionCallback callback) {
+        commentsRef.child(postId).child(commentId).removeValue()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        callback.onSuccess();
+                    } else {
+                        callback.onFailure(task.getException());
+                    }
+                });
     }
 
     public interface CommentsCallback {

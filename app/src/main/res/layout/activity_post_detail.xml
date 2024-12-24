@@ -1,100 +1,154 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="16dp">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Header Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:paddingBottom="8dp">
+
+                <!-- Back Button -->
+                <ImageButton
+                    android:id="@+id/back_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_back"
+                    android:contentDescription="Back"
+                    android:background="?attr/selectableItemBackgroundBorderless" />
+
+                <!-- Title -->
+                <TextView
+                    android:id="@+id/post_detail_header"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="상세보기"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:gravity="center" />
+
+                <!-- Action Buttons -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="end">
+
+                    <ImageButton
+                        android:id="@+id/edit_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_edit"
+                        android:contentDescription="Edit"
+                        android:visibility="gone"
+                        android:background="?attr/selectableItemBackgroundBorderless" />
+
+                    <ImageButton
+                        android:id="@+id/delete_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_delete"
+                        android:contentDescription="Delete"
+                        android:visibility="gone"
+                        android:background="?attr/selectableItemBackgroundBorderless" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- User Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="start|center_vertical"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_person"
+                    android:contentDescription="User Icon" />
+
+                <TextView
+                    android:id="@+id/post_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="User"
+                    android:paddingStart="8dp"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Post Title -->
+            <TextView
+                android:id="@+id/post_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Post Title"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp" />
+
+            <!-- Post Content -->
+            <TextView
+                android:id="@+id/post_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Post Content"
+                android:textSize="16sp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp" />
+
+            <!-- Comments Section -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/comments_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Comment Input Section -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="@android:color/white"
+        android:elevation="2dp">
 
-        <!-- Header Section -->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/comment_input"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end|center_vertical"
-            android:paddingBottom="8dp">
+            android:layout_weight="1"
+            android:hint="Write a comment..."
+            android:textSize="14sp" />
 
-            <ImageButton
-                android:id="@+id/back_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_back"
-                android:contentDescription="Back"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:layout_gravity="end" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/post_detail_header"
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/send_comment_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="상세보기"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:padding="8dp" />
-
-        <!-- User Section -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="start|center_vertical"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_person"
-                android:contentDescription="User Icon" />
-
-            <TextView
-                android:id="@+id/post_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="User"
-                android:paddingStart="8dp"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <!-- Post Title -->
-        <TextView
-            android:id="@+id/post_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Post Title"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp" />
-
-        <!-- Post Content -->
-        <TextView
-            android:id="@+id/post_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Post Content"
-            android:textSize="16sp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp" />
-
-        <!-- Comments Section -->
-        <TextView
-            android:id="@+id/no_comments_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="No comments available"
-            android:gravity="center"
-            android:paddingTop="16dp"
-            android:visibility="visible" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/comments_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+            android:src="@drawable/ic_send"
+            android:contentDescription="Send Comment"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_marginStart="8dp" />
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

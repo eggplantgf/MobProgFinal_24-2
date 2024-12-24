@@ -33,11 +33,15 @@
             android:name=".board.BoardActivity"
             android:exported="true" />
 
-        <!-- PostFormActivity (통합된 액티비티) -->
+        <!-- PostFormActivity -->
         <activity
             android:name=".board.PostFormActivity"
             android:exported="true" />
 
+        <!-- PostDetailActivity -->
+        <activity
+            android:name=".board.PostDetailActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

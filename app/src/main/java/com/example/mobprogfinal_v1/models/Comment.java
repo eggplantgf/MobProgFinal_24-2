@@ -9,6 +9,10 @@ public class Comment {
     private String content;
     private Date datetime;
 
+    public Comment() {
+        // Firebase requires a no-argument constructor
+    }
+
     public Comment(String id, String postId, String userId, String content, Date datetime) {
         this.id = id;
         this.postId = postId;
@@ -17,7 +21,6 @@ public class Comment {
         this.datetime = datetime;
     }
 
-    // Getter and Setter methods
     public String getId() {
         return id;
     }

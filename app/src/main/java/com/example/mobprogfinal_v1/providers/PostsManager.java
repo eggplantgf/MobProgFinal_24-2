@@ -111,6 +111,7 @@ public class PostsManager {
         });
     }
 
+
     private Post parsePost(DataSnapshot snapshot) {
         try {
             String id = snapshot.getKey();

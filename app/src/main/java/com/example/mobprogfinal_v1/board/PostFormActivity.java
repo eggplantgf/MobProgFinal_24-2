@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobprogfinal_v1.R;
 import com.example.mobprogfinal_v1.models.Post;
+import com.example.mobprogfinal_v1.providers.AuthManager;
 import com.example.mobprogfinal_v1.providers.PostsManager;
 
 import java.util.Date;
@@ -69,7 +70,13 @@ public class PostFormActivity extends AppCompatActivity {
                 return;
             }
 
-            Post post = new Post(null, title, content, new Date(), 0, 0, null);
+            String userId = AuthManager.getInstance().getCurrentUserId();
+            if (userId == null) {
+                Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Post post = new Post(null, title, content, new Date(), 0, 0, userId);
             PostsManager.getInstance().addPost(post, new PostsManager.SinglePostCallback() {
                 @Override
                 public void onSuccess(Post newPost) {
