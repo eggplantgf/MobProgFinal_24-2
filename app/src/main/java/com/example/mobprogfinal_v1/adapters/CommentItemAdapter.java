@@ -1,4 +1,4 @@
-package com.example.mobprogfinal_v1.board;
+package com.example.mobprogfinal_v1.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

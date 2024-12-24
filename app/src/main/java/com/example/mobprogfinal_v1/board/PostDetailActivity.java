@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobprogfinal_v1.models.Post;
 import com.example.mobprogfinal_v1.R;
-import com.example.mobprogfinal_v1.board.CommentItemAdapter;
+import com.example.mobprogfinal_v1.adapters.CommentItemAdapter;
 import com.example.mobprogfinal_v1.models.Comment;
 import com.example.mobprogfinal_v1.providers.AuthManager;
 import com.example.mobprogfinal_v1.providers.CommentsManager;
