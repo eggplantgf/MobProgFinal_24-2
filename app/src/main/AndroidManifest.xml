@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- 권한 설정 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MobProgFinal_v1">
 
+        <!-- SignupActivity -->
         <activity
             android:name=".auth.SignupActivity"
             android:exported="true" />
@@ -28,20 +33,11 @@
             android:name=".board.BoardActivity"
             android:exported="true" />
 
-        <!-- EditPostActivity -->
+        <!-- PostFormActivity (통합된 액티비티) -->
         <activity
-            android:name=".board.EditPostActivity"
-            android:exported="true" />
-
-        <!-- PostDetailActivity -->
-        <activity
-            android:name=".board.PostDetailActivity"
+            android:name=".board.PostFormActivity"
             android:exported="true" />
 
     </application>
-
-    <!-- 권한 설정 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

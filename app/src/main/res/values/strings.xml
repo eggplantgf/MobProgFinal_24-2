@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">MobProgFinal_v1</string>
+    <string name="app_name">MobProgFinal</string>
+    <string name="write_post">Write Post</string>
+    <string name="save_post">Save Post</string>
+    <string name="post_title_hint">Post Title</string>
+    <string name="post_content_hint">Post Content</string>
 </resources>

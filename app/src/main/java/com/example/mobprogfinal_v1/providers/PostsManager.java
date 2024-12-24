@@ -1,62 +1,155 @@
 package com.example.mobprogfinal_v1.providers;
 
+import android.util.Log;
+
 import com.example.mobprogfinal_v1.models.Post;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class PostsManager {
-    private List<Post> posts = new ArrayList<>();
 
-    public interface PostsCallback {
-        void onPostsLoaded(List<Post> posts);
-        void onPostLoaded(Post post);
-        void onError(Exception e);
+    private static final String TAG = "PostsManager";
+    private static PostsManager instance;
+    private final DatabaseReference postsRef;
+
+    private PostsManager() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        postsRef = database.getReference("posts");
     }
 
-    public interface PostActionCallback {
-        void onComplete(boolean success);
-    }
-
-    // 게시글 목록 가져오기
-    public void fetchPosts(PostsCallback callback) {
-        // 테스트 데이터 (Firebase 연동 시 교체 필요)
-        posts.add(new Post("1", "Sample Title", "Sample Content", System.currentTimeMillis(), "user123", 2, 5));
-        callback.onPostsLoaded(posts);
-    }
-
-    // 특정 게시글 가져오기
-    public void getPost(String postId, PostsCallback callback) {
-        for (Post post : posts) {
-            if (post.getId().equals(postId)) {
-                callback.onPostLoaded(post);
-                return;
-            }
+    public static synchronized PostsManager getInstance() {
+        if (instance == null) {
+            instance = new PostsManager();
         }
-        callback.onError(new Exception("Post not found"));
+        return instance;
     }
 
-    // 게시글 추가
-    public void addPost(Post post, PostActionCallback callback) {
-        post.setId(String.valueOf(posts.size() + 1)); // ID 생성 (Firebase 연동 시 교체)
-        posts.add(post);
-        callback.onComplete(true);
+    public interface SinglePostCallback {
+        void onSuccess(Post post);
+
+        void onError(String error);
     }
 
-    // 게시글 업데이트
-    public void updatePost(String postId, Post updatedPost, PostActionCallback callback) {
-        for (int i = 0; i < posts.size(); i++) {
-            if (posts.get(i).getId().equals(postId)) {
-                posts.set(i, updatedPost);
-                callback.onComplete(true);
-                return;
+    public interface AllPostsCallback {
+        void onSuccess(List<Post> posts);
+
+        void onError(String error);
+    }
+
+    public void fetchPostById(String postId, SinglePostCallback callback) {
+        postsRef.child(postId).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult() != null) {
+                DataSnapshot snapshot = task.getResult();
+                try {
+                    Post post = parsePost(snapshot);
+                    if (post != null) {
+                        callback.onSuccess(post);
+                    } else {
+                        callback.onError("Failed to parse post");
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "Error parsing post data: ", e);
+                    callback.onError("Failed to parse post data.");
+                }
+            } else {
+                Log.e(TAG, "Error fetching post: ", task.getException());
+                callback.onError("Failed to fetch post.");
             }
-        }
-        callback.onComplete(false);
+        });
     }
 
-    // 게시글 삭제
-    public void deletePost(String postId, PostActionCallback callback) {
-        posts.removeIf(post -> post.getId().equals(postId));
-        callback.onComplete(true);
+    public void fetchAllPosts(AllPostsCallback callback) {
+        postsRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult() != null) {
+                List<Post> postList = new ArrayList<>();
+                try {
+                    for (DataSnapshot snapshot : task.getResult().getChildren()) {
+                        Post post = parsePost(snapshot);
+                        if (post != null) {
+                            postList.add(post);
+                        } else {
+                            Log.e(TAG, "Null post parsed, skipping.");
+                        }
+                    }
+                    callback.onSuccess(postList);
+                } catch (Exception e) {
+                    Log.e(TAG, "Error parsing posts data: ", e);
+                    callback.onError("Failed to parse posts data.");
+                }
+            } else {
+                Log.e(TAG, "Error fetching posts: ", task.getException());
+                callback.onError("Failed to fetch posts.");
+            }
+        });
     }
+
+    public void addPost(Post post, SinglePostCallback callback) {
+        if (post == null) {
+            callback.onError("Post cannot be null");
+            return;
+        }
+
+        String newPostId = postsRef.push().getKey();
+        if (newPostId == null) {
+            callback.onError("Failed to generate post ID");
+            return;
+        }
+
+        post.setId(newPostId);
+        postsRef.child(newPostId).setValue(post.toMap()).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                callback.onSuccess(post);
+            } else {
+                callback.onError("Failed to add post: " + Objects.requireNonNull(task.getException()).getMessage());
+            }
+        });
+    }
+
+    private Post parsePost(DataSnapshot snapshot) {
+        try {
+            String id = snapshot.getKey();
+            String title = snapshot.child("title").getValue(String.class);
+            String contents = snapshot.child("contents").getValue(String.class);
+            Long timestamp = snapshot.child("datetime").getValue(Long.class);
+            Integer minPeople = snapshot.child("minPeople").getValue(Integer.class);
+            Integer maxPeople = snapshot.child("maxPeople").getValue(Integer.class);
+            String userId = snapshot.child("userId").getValue(String.class);
+
+            // Handle null or missing values
+            title = title != null ? title : "Untitled";
+            contents = contents != null ? contents : "No content";
+            minPeople = minPeople != null ? minPeople : 0;
+            maxPeople = maxPeople != null ? maxPeople : 0;
+            timestamp = timestamp != null ? timestamp : 0L;
+
+            Date datetime = new Date(timestamp);
+            return new Post(id, title, contents, datetime, minPeople, maxPeople, userId);
+        } catch (Exception e) {
+            Log.e(TAG, "Error parsing post snapshot: ", e);
+            return null;
+        }
+    }
+
+    public void deletePost(String postId, ActionCallback callback) {
+        postsRef.child(postId).removeValue().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                callback.onSuccess();
+            } else {
+                callback.onError(task.getException().getMessage());
+            }
+        });
+    }
+
+    public interface ActionCallback {
+        void onSuccess();
+
+        void onError(String error);
+    }
+
 }

@@ -1,59 +1,56 @@
 package com.example.mobprogfinal_v1.board;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import android.widget.BaseAdapter;
 
 import com.example.mobprogfinal_v1.R;
 import com.example.mobprogfinal_v1.models.Post;
 
 import java.util.List;
 
-public class PostItemAdapter extends RecyclerView.Adapter<PostItemAdapter.PostViewHolder> {
-    private List<Post> posts;
-    private OnPostClickListener listener;
+public class PostItemAdapter extends BaseAdapter {
 
-    public interface OnPostClickListener {
-        void onPostClick(Post post);
-    }
+    private final Context context;
+    private final List<Post> posts;
 
-    public PostItemAdapter(List<Post> posts, OnPostClickListener listener) {
+    public PostItemAdapter(Context context, List<Post> posts) {
+        this.context = context;
         this.posts = posts;
-        this.listener = listener;
-    }
-
-    @NonNull
-    @Override
-    public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_post, parent, false);
-        return new PostViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
-        Post post = posts.get(position);
-        holder.titleText.setText(post.getTitle());
-        holder.contentText.setText(post.getContents());
-        holder.itemView.setOnClickListener(v -> listener.onPostClick(post));
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return posts.size();
     }
 
-    static class PostViewHolder extends RecyclerView.ViewHolder {
-        TextView titleText, contentText;
+    @Override
+    public Object getItem(int position) {
+        return posts.get(position);
+    }
 
-        public PostViewHolder(@NonNull View itemView) {
-            super(itemView);
-            titleText = itemView.findViewById(R.id.post_title);
-            contentText = itemView.findViewById(R.id.post_content);
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
         }
+
+        Post post = posts.get(position);
+
+        TextView titleTextView = convertView.findViewById(R.id.item_post_title);
+        TextView contentTextView = convertView.findViewById(R.id.item_post_content);
+
+        titleTextView.setText(post.getTitle());
+        contentTextView.setText(post.getContents());
+
+        return convertView;
     }
 }

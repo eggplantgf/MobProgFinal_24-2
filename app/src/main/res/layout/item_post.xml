@@ -1,23 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
-    android:background="@drawable/item_background">
+    android:background="@android:color/white"
+    android:layout_margin="4dp"
+    android:elevation="2dp">
 
     <TextView
-        android:id="@+id/postTitle"
-        android:layout_width="wrap_content"
+        android:id="@+id/item_post_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Post Title"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:textSize="18sp" />
+        android:layout_marginBottom="4dp" />
 
     <TextView
-        android:id="@+id/postDate"
-        android:layout_width="wrap_content"
+        android:id="@+id/item_post_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Post Date"
-        android:textSize="14sp" />
+        android:text="Post Content"
+        android:textSize="14sp"
+        android:maxLines="2"
+        android:ellipsize="end" />
 </LinearLayout>

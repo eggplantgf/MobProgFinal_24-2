@@ -1,6 +1,108 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header Actions -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <ImageButton
+                android:id="@+id/edit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_edit"
+                android:contentDescription="Edit Post"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete"
+                android:contentDescription="Delete Post"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/post_title_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/title_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Title"
+            android:visibility="visible" />
+
+        <!-- Content -->
+        <TextView
+            android:id="@+id/post_content_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Content"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/content_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Content"
+            android:lines="4"
+            android:gravity="top"
+            android:visibility="visible" />
+
+        <!-- Min and Max People -->
+        <EditText
+            android:id="@+id/min_people_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Min People"
+            android:inputType="number"
+            android:visibility="visible" />
+
+        <EditText
+            android:id="@+id/max_people_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Max People"
+            android:inputType="number"
+            android:visibility="visible" />
+
+        <!-- Save Button -->
+        <Button
+            android:id="@+id/save_post_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Post"
+            android:visibility="visible" />
+
+        <!-- Comment Section -->
+        <TextView
+            android:id="@+id/no_comments_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No comments available"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/comments_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+    </LinearLayout>
+</ScrollView>

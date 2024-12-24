@@ -1,28 +1,35 @@
 package com.example.mobprogfinal_v1.models;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Post {
+
     private String id;
     private String title;
     private String contents;
-    private long datetime;
-    private String userId;
+    private Date datetime;
     private int minPeople;
     private int maxPeople;
+    private String userId;
 
-    public Post(String id, String title, String contents, long datetime, String userId, int minPeople, int maxPeople) {
+    public Post(String id, String title, String contents, Date datetime, int minPeople, int maxPeople, String userId) {
         this.id = id;
         this.title = title;
         this.contents = contents;
         this.datetime = datetime;
-        this.userId = userId;
         this.minPeople = minPeople;
         this.maxPeople = maxPeople;
+        this.userId = userId;
     }
 
+    // Getter for id
     public String getId() {
         return id;
     }
 
+    // Setter for id
     public void setId(String id) {
         this.id = id;
     }
@@ -35,12 +42,8 @@ public class Post {
         return contents;
     }
 
-    public long getDatetime() {
+    public Date getDatetime() {
         return datetime;
-    }
-
-    public String getUserId() {
-        return userId;
     }
 
     public int getMinPeople() {
@@ -49,5 +52,20 @@ public class Post {
 
     public int getMaxPeople() {
         return maxPeople;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> postMap = new HashMap<>();
+        postMap.put("title", title);
+        postMap.put("contents", contents);
+        postMap.put("datetime", datetime != null ? datetime.getTime() : null);
+        postMap.put("minPeople", minPeople);
+        postMap.put("maxPeople", maxPeople);
+        postMap.put("userId", userId);
+        return postMap;
     }
 }
