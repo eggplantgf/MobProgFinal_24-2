@@ -23,7 +23,7 @@ public class PostFormActivity extends AppCompatActivity {
     private EditText titleInput, contentInput;
     private TextView titleLabel, contentLabel;
     private Button savePostButton;
-    private ImageButton editButton, deleteButton;
+    private ImageButton editButton, deleteButton, backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,7 @@ public class PostFormActivity extends AppCompatActivity {
         savePostButton = findViewById(R.id.save_post_button);
         editButton = findViewById(R.id.edit_button);
         deleteButton = findViewById(R.id.delete_button);
+        backButton = findViewById(R.id.back_button); // 뒤로가기 버튼 추가
 
         if (isEditMode) {
             titleLabel.setVisibility(View.GONE);
@@ -58,6 +59,9 @@ public class PostFormActivity extends AppCompatActivity {
             contentInput.setVisibility(View.GONE);
             savePostButton.setVisibility(View.GONE);
         }
+
+        // 뒤로가기 버튼 기능 추가
+        backButton.setOnClickListener(v -> finish());
     }
 
     private void setupSaveButton() {

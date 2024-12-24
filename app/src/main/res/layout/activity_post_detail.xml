@@ -116,6 +116,18 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp" />
 
+            <!-- Comments Header -->
+            <TextView
+                android:id="@+id/comments_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comments"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:textColor="@android:color/darker_gray"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp" />
+
             <!-- Comments Section -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/comments_list"
@@ -131,7 +143,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp"
-        android:background="@android:color/white"
+        android:background="@drawable/border_red"
         android:elevation="2dp">
 
         <EditText

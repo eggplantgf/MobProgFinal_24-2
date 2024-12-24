@@ -1,0 +1,7 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@android:color/white" /> <!-- 내부 배경색 -->
+    <stroke
+        android:width="2dp"
+        android:color="@android:color/holo_blue_dark" /> <!-- 테두리 색 -->
+    <corners android:radius="16dp" /> <!-- 둥근 모서리 -->
+</shape>

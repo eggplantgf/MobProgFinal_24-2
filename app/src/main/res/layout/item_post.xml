@@ -2,10 +2,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp"
-    android:background="@android:color/white"
-    android:layout_margin="4dp"
-    android:elevation="2dp">
+    android:padding="16dp"
+    android:background="@drawable/border_red"
+    android:layout_marginBottom="8dp"
+    android:elevation="4dp">
 
     <TextView
         android:id="@+id/item_post_title"
@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         android:text="Post Title"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="4dp" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/item_post_content"

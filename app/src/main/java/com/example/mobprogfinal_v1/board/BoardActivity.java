@@ -2,6 +2,7 @@ package com.example.mobprogfinal_v1.board;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,6 +44,16 @@ public class BoardActivity extends AppCompatActivity {
             loadPosts();
             swipeRefreshLayout.setRefreshing(false);
         });
+
+        // 메뉴 버튼 클릭 시 Toast 출력
+        ImageButton menuButton = findViewById(R.id.menu_button);
+        menuButton.setOnClickListener(v ->
+                Toast.makeText(this, "드로우바 기능 미구현", Toast.LENGTH_SHORT).show());
+
+        // 검색 버튼 클릭 시 Toast 출력
+        ImageButton searchButton = findViewById(R.id.search_button);
+        searchButton.setOnClickListener(v ->
+                Toast.makeText(this, "검색 기능 미구현", Toast.LENGTH_SHORT).show());
     }
 
     private void setupRecyclerView() {

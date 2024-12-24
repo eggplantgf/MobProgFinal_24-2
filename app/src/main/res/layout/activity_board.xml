@@ -9,18 +9,72 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- Top Bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <!-- Menu Button -->
+            <ImageButton
+                android:id="@+id/menu_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_menu"
+                android:contentDescription="Menu"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="onMenuButtonClick" />
+
+            <!-- App Logo -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="For Logo"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Search Button -->
+            <ImageButton
+                android:id="@+id/search_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_search"
+                android:contentDescription="Search"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="onSearchButtonClick" />
+        </LinearLayout>
+
+        <!-- Notice Section -->
+        <TextView
+            android:id="@+id/notice_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_red"
+            android:padding="8dp"
+            android:text="공지사항"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+        <!-- Posts List -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/posts_list_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
+        <!-- Write Post Button -->
         <Button
             android:id="@+id/write_post_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
+            android:background="@android:color/holo_red_dark"
+            android:textColor="@android:color/white"
             android:text="Write Post" />
     </LinearLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
